@@ -1,6 +1,9 @@
-const actionLogin = (payload) => ({
+export const actionLogin = (payload) => ({
   type: 'LOGIN',
   payload,
 });
 
-export default actionLogin;
+export const getToken = (payload) => ({
+  type: 'GET_TOKEN',
+  payload,
+});

@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { getToken } from '../redux/actions';
+import fetchToken from '../service/api';
 
 class Login extends Component {
   state = {
@@ -9,10 +13,13 @@ class Login extends Component {
   };
 
   handleChange = ({ target: { name, value } }) => {
-    this.setState({
-      [name]: value,
-    }, () => this.validateBtn());
-  }
+    this.setState(
+      {
+        [name]: value,
+      },
+      () => this.validateBtn(),
+    );
+  };
 
   validateBtn = () => {
     const { nameInput, emailInput } = this.state;
@@ -23,10 +30,18 @@ class Login extends Component {
       return;
     }
     this.setState({ isDisabled: true });
+  };
+
+  callSetToken = async () => {
+    const { setToken } = this.props;
+    const data = await fetchToken();
+    console.log(typeof data.token);
+    setToken(data.token);
   }
 
   render() {
     const { isDisabled } = this.state;
+
     return (
       <form>
         <label htmlFor="input-player-name">
@@ -34,7 +49,6 @@ class Login extends Component {
           <input
             type="text"
             name="nameInput"
-            // value={ value }
             onChange={ this.handleChange }
             data-testid="input-player-name"
           />
@@ -44,14 +58,26 @@ class Login extends Component {
           <input
             type="text"
             name="emailInput"
-            // value={ value }
             onChange={ this.handleChange }
             data-testid="input-gravatar-email"
           />
         </label>
         <Link to="/game">
-          <button type="button" data-testid="btn-play" disabled={ isDisabled }>
+          <button
+            type="button"
+            data-testid="btn-play"
+            onClick={ this.callSetToken }
+            disabled={ isDisabled }
+          >
             Play
+          </button>
+        </Link>
+        <Link to="/settings">
+          <button
+            type="button"
+            data-testid="btn-settings"
+          >
+            Settings
           </button>
         </Link>
       </form>
@@ -59,4 +85,12 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  setToken: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  setToken: (payload) => dispatch(getToken(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
