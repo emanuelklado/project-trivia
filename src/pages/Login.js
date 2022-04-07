@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { getToken } from '../redux/actions';
+import { getToken, actionLogin } from '../redux/actions';
 import fetchToken from '../service/api';
 
 class Login extends Component {
@@ -32,10 +32,16 @@ class Login extends Component {
     this.setState({ isDisabled: true });
   };
 
-  callSetToken = async () => {
-    const { setToken } = this.props;
+  handleDispatches = async () => {
+    const { nameInput, emailInput } = this.state;
+    const { dispatchScore, setToken } = this.props;
+
+    dispatchScore({
+      userName: nameInput,
+      userEmail: emailInput,
+    });
+
     const data = await fetchToken();
-    console.log(typeof data.token);
     setToken(data.token);
   }
 
@@ -66,7 +72,7 @@ class Login extends Component {
           <button
             type="button"
             data-testid="btn-play"
-            onClick={ this.callSetToken }
+            onClick={ this.handleDispatches }
             disabled={ isDisabled }
           >
             Play
@@ -87,10 +93,12 @@ class Login extends Component {
 
 Login.propTypes = {
   setToken: PropTypes.func.isRequired,
+  dispatchScore: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   setToken: (payload) => dispatch(getToken(payload)),
+  dispatchScore: (payload) => dispatch(actionLogin(payload)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
