@@ -1,8 +1,8 @@
 const INITIAL_STATE = {
-  name: '',
+  userName: '',
   assertions: 0,
   score: 0,
-  gravatarEmail: '',
+  userEmail: '',
 };
 
 const player = (state = INITIAL_STATE, action) => {
