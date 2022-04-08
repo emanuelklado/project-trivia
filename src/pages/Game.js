@@ -2,45 +2,47 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-import { fetchApiGame, fetchToken } from '../service/api';
+// import { fetchApiGame, fetchToken } from '../service/api';
 import { getToken, actionLogin } from '../redux/actions';
 
 class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      questions: [],
+      // questions: [],
       questionIndex: 0,
     };
   }
 
-  async componentDidMount() {
-    const { userToken } = this.props;
-    const errorCode = 3;
-    const firstToken = await fetchApiGame(userToken);
-    if (firstToken.response_code === errorCode) {
-      const newToken = await fetchToken();
-      const secondToken = await fetchApiGame(newToken.token);
-      this.setState({ questions: secondToken.results });
-      return;
-    }
-    this.setState({ questions: firstToken.results });
-  }
+  // async componentDidMount() {
+  //   const { userToken } = this.props;
+  //   const errorCode = 3;
+  //   const firstToken = await fetchApiGame(userToken);
+  //   if (firstToken.response_code === errorCode) {
+  //     const newToken = await fetchToken();
+  //     const secondToken = await fetchApiGame(newToken.token);
+  //     this.setState({ questions: secondToken.results });
+  //     return;
+  //   }
+  //   this.setState({ questions: firstToken.results });
+  // }
 
   render() {
-    const { questions, questionIndex } = this.state;
-    console.log('here', questions);
+    // const { questions, questionIndex } = this.state;
+    const { questionIndex } = this.state;
+    // console.log('here', questions);
+    const { sessionQuestions: { results } } = this.props;
 
     return (
       <div>
         <Header />
-        {questions.length > 0 && (
+        {results !== undefined && (
           <div>
             <p data-testid="question-category">
-              { questions[questionIndex].category }
+              { results[questionIndex].category }
             </p>
             <p data-testid="question-text">
-              { questions[questionIndex].question }
+              { results[questionIndex].question }
             </p>
           </div>
         )}
@@ -56,6 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   userToken: state.token,
+  sessionQuestions: state.questions,
 });
 
 Game.propTypes = {

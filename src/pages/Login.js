@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { getToken, actionLogin } from '../redux/actions';
-import { fetchToken } from '../service/api';
+import { getToken, actionLogin, getQuestions } from '../redux/actions';
+import { fetchToken, fetchApiGame } from '../service/api';
 
 class Login extends Component {
   state = {
@@ -34,15 +34,18 @@ class Login extends Component {
 
   handleDispatches = async () => {
     const { nameInput, emailInput } = this.state;
-    const { dispatchScore, setToken } = this.props;
+    const { dispatchScore, setToken, dispatchQuestions } = this.props;
 
     const data = await fetchToken();
+    const questionsData = await fetchApiGame(data.token);
+
     dispatchScore({
       userName: nameInput,
       userEmail: emailInput,
     });
 
     setToken(data.token);
+    dispatchQuestions(questionsData);
   }
 
   render() {
@@ -94,11 +97,13 @@ class Login extends Component {
 Login.propTypes = {
   setToken: PropTypes.func.isRequired,
   dispatchScore: PropTypes.func.isRequired,
+  dispatchQuestions: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   setToken: (payload) => dispatch(getToken(payload)),
   dispatchScore: (payload) => dispatch(actionLogin(payload)),
+  dispatchQuestions: (payload) => dispatch(getQuestions(payload)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
