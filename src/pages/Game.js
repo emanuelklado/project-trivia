@@ -40,6 +40,11 @@ class Game extends Component {
                   ? 'correct-answer'
                   : `wrong-answer-${index}`
               }
+              style={
+                option === correctAnswer
+                  ? { border: '3px solid rgb(6, 240, 15)' }
+                  : { border: '3px solid rgb(255, 0, 0)' }
+              }
             >
               { option }
             </button>
