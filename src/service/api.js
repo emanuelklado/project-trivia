@@ -5,4 +5,10 @@ const fetchToken = async () => {
   return resolve;
 };
 
-export default fetchToken;
+const fetchApiGame = async (token) => {
+  const result = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
+  const resolve = await result.json();
+  return resolve;
+};
+
+export { fetchToken, fetchApiGame };

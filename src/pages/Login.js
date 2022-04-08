@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getToken, actionLogin } from '../redux/actions';
-import fetchToken from '../service/api';
+import { fetchToken } from '../service/api';
 
 class Login extends Component {
   state = {
