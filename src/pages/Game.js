@@ -13,8 +13,11 @@ class Game extends Component {
     };
   }
 
+  // Esse component funcional pode ser feito em outro arquivo;
   answersShuffle = () => {
     const { questionIndex } = this.state;
+
+    const randomChance = 0.75;
 
     const { sessionQuestions: { results } } = this.props;
 
@@ -24,7 +27,7 @@ class Game extends Component {
 
       const output = [...incorrectAnswers, correctAnswer];
 
-      output.sort(() => Math.random() - 0.75);
+      output.sort(() => Math.random() - randomChance);
 
       return (
         <div data-testid="answer-options">
@@ -49,6 +52,8 @@ class Game extends Component {
   render() {
     const { questionIndex } = this.state;
 
+    // Questions Index será usado para mudar ir para  proxima questão
+
     const { sessionQuestions: { results } } = this.props;
 
     return (
@@ -56,12 +61,12 @@ class Game extends Component {
         <Header />
         {results !== undefined && (
           <div>
-            {console.log(results[0])}
+            {console.log(results[questionIndex])}
             <p data-testid="question-category">
-              { results[0].category }
+              { results[questionIndex].category }
             </p>
             <p data-testid="question-text">
-              { results[0].question }
+              { results[questionIndex].question }
             </p>
           </div>
         )}
