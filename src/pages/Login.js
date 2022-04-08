@@ -36,12 +36,12 @@ class Login extends Component {
     const { nameInput, emailInput } = this.state;
     const { dispatchScore, setToken } = this.props;
 
+    const data = await fetchToken();
     dispatchScore({
       userName: nameInput,
       userEmail: emailInput,
     });
 
-    const data = await fetchToken();
     setToken(data.token);
   }
 

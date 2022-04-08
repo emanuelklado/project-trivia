@@ -22,7 +22,9 @@ class Game extends Component {
       const newToken = await fetchToken();
       const secondToken = await fetchApiGame(newToken.token);
       this.setState({ questions: secondToken.results });
+      return;
     }
+    this.setState({ questions: firstToken.results });
   }
 
   render() {
