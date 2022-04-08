@@ -9,28 +9,46 @@ class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // questions: [],
       questionIndex: 0,
     };
   }
 
-  // async componentDidMount() {
-  //   const { userToken } = this.props;
-  //   const errorCode = 3;
-  //   const firstToken = await fetchApiGame(userToken);
-  //   if (firstToken.response_code === errorCode) {
-  //     const newToken = await fetchToken();
-  //     const secondToken = await fetchApiGame(newToken.token);
-  //     this.setState({ questions: secondToken.results });
-  //     return;
-  //   }
-  //   this.setState({ questions: firstToken.results });
-  // }
+  answersShuffle = () => {
+    const { questionIndex } = this.state;
+
+    const { sessionQuestions: { results } } = this.props;
+
+    if (results !== undefined) {
+      const { correct_answer: correctAnswer,
+        incorrect_answers: incorrectAnswers } = results[questionIndex];
+
+      const output = [...incorrectAnswers, correctAnswer];
+
+      output.sort(() => Math.random() - 0.75);
+
+      return (
+        <div data-testid="answer-options">
+          {output.map((option, index) => (
+            <button
+              type="button"
+              key={ index }
+              data-testid={
+                option === correctAnswer
+                  ? 'correct-answer'
+                  : `wrong-answer-${index}`
+              }
+            >
+              { option }
+            </button>
+          ))}
+        </div>
+      );
+    }
+  }
 
   render() {
-    // const { questions, questionIndex } = this.state;
     const { questionIndex } = this.state;
-    // console.log('here', questions);
+
     const { sessionQuestions: { results } } = this.props;
 
     return (
@@ -38,14 +56,16 @@ class Game extends Component {
         <Header />
         {results !== undefined && (
           <div>
+            {console.log(results[0])}
             <p data-testid="question-category">
-              { results[questionIndex].category }
+              { results[0].category }
             </p>
             <p data-testid="question-text">
-              { results[questionIndex].question }
+              { results[0].question }
             </p>
           </div>
         )}
+        {this.answersShuffle()}
       </div>
     );
   }
