@@ -9,7 +9,8 @@ class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false,
+      questions: [],
+      questionIndex: 0,
     };
   }
 
@@ -17,27 +18,30 @@ class Game extends Component {
     const { userToken } = this.props;
     const errorCode = 3;
     const firstToken = await fetchApiGame(userToken);
-    console.log(firstToken);
     if (firstToken.response_code === errorCode) {
-      this.getNewtoken(firstToken.response_code);
-      return;
+      const newToken = await fetchToken();
+      const secondToken = await fetchApiGame(newToken.token);
+      this.setState({ questions: secondToken.results });
     }
-    this.setState({ questions: firstToken.results }, () => console.log(this.state));
-  }
-
-  getNewtoken = async (error) => {
-    const { userToken, setToken } = this.props;
-    const newToken = await fetchToken();
-    setToken(newToken.token);
-    console.log(userToken);
-    const errorCode = 3;
-    if (error === errorCode) this.componentDidMount();
   }
 
   render() {
+    const { questions, questionIndex } = this.state;
+    console.log('here', questions);
+
     return (
       <div>
         <Header />
+        {questions.length > 0 && (
+          <div>
+            <p data-testid="question-category">
+              { questions[questionIndex].category }
+            </p>
+            <p data-testid="question-text">
+              { questions[questionIndex].question }
+            </p>
+          </div>
+        )}
       </div>
     );
   }
