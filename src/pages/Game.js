@@ -13,7 +13,7 @@ class Game extends Component {
       options: [], // Opções da pergunta atual
       correct: '', // Resposta correta
       answered: false, // Se foi respondida a pergunta
-      time: 0, // Contador para a resposta
+      time: 30, // Contador para a resposta
     };
   }
 
@@ -24,12 +24,12 @@ class Game extends Component {
   timer = () => {
     const COUNTDOWN = 1000;
     const TIMEOUT = 30;
-    let counter = 0;
+    let counter = TIMEOUT;
     let intervalID = null;
     const countdown = () => {
       const { answered } = this.state;
-      if (counter < TIMEOUT && !answered) {
-        counter += 1;
+      if (counter !== 0 && !answered) {
+        counter -= 1;
       } else {
         clearInterval(intervalID);
         this.setState({ answered: true });
