@@ -5,8 +5,7 @@ import md5 from 'crypto-js/md5';
 
 class Header extends React.Component {
   render() {
-    const { userName, userEmail } = this.props;
-    // const { score } = this.state;
+    const { userName, userEmail, userScore, userAssertions } = this.props;  
 
     return (
       <header>
@@ -17,7 +16,7 @@ class Header extends React.Component {
             data-testid="header-profile-picture"
           />
           <div data-testid="header-player-name">{userName}</div>
-          <div data-testid="header-score">0</div>
+          <div data-testid="header-score">{ userScore }</div>
         </h1>
       </header>
     );
@@ -27,6 +26,8 @@ class Header extends React.Component {
 const mapStateToProps = (state) => ({
   userName: state.player.userName,
   userEmail: state.player.userEmail,
+  userScore: state.player.score,
+  userAssertions: state.player.assertions,
 });
 
 Header.propTypes = {
