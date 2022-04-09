@@ -80,7 +80,7 @@ class Game extends Component {
   render() {
     const { questionIndex, options, correct, answered, time } = this.state;
 
-    const { sessionQuestions: { results } } = this.props;
+    const { sessionQuestions: { results }, history } = this.props;
 
     const MAX_QUESTIONS = 4; // Usado na linha 137 para o if
 
@@ -140,12 +140,13 @@ class Game extends Component {
               type="button"
               data-testid="btn-next"
               onClick={ () => {
-                if (questionIndex < MAX_QUESTIONS) {
-                  this.setState({ questionIndex: questionIndex + 1 });
-                  // History.push do feedback pode vir aqui. Precisa desestruturar ele no render
+                this.setState({ questionIndex: questionIndex + 1 });
+                if (questionIndex === MAX_QUESTIONS) {
+                  history.push({ pathname: ('/feedback') });
+                } else {
+                  this.answersShuffle();
+                  this.setState({ answered: false, time: 0 });
                 }
-                this.answersShuffle();
-                this.setState({ answered: false, time: 0 });
               } }
             >
               Proxima
