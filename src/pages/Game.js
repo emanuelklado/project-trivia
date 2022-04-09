@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 // import { fetchApiGame, fetchToken } from '../service/api';
-import { getToken, actionLogin } from '../redux/actions';
+import { getToken, sendScore, sendAssertion } from '../redux/actions';
 
 class Game extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class Game extends Component {
   }
 
   componentDidMount() {
-    this.answersShuffle();
+    this.answersShuffle(0);
   }
 
   timer = () => {
@@ -39,8 +39,9 @@ class Game extends Component {
     intervalID = setInterval(countdown, COUNTDOWN);
   }
 
-  answersShuffle = () => {
-    const { questionIndex } = this.state;
+  answersShuffle = (questionIndex) => {  
+    
+    console.log(questionIndex)
 
     const randomChance = 0.5;
 
@@ -61,7 +62,7 @@ class Game extends Component {
     console.log(target.textContent);
     const base = 10;
     const { questionIndex, time } = this.state;
-    const { sessionQuestions: { results }, dispatchScore } = this.props;
+    const { sessionQuestions: { results }, dispatchScore, dispatchAssertion } = this.props;
     const { correct_answer: correctAnswer } = results[questionIndex];
     if (target.textContent === correctAnswer) {
       const questionTypeScore = {
@@ -71,18 +72,22 @@ class Game extends Component {
       };
       const { difficulty } = results[questionIndex];
       const total = base + (time * questionTypeScore[difficulty]);
-      dispatchScore({ score: total });
+      console.log(total)
+      dispatchScore(total);
+      dispatchAssertion();
 
       // Falta descobrir pra que a chave assertions serve.
     }
   }
 
   render() {
-    const { questionIndex, options, correct, answered, time } = this.state;
+    const { options, correct, answered, time } = this.state;
+
+    let { questionIndex } = this.state;
 
     const { sessionQuestions: { results }, history } = this.props;
 
-    const MAX_QUESTIONS = 4; // Usado na linha 137 para o if
+    const MAX_QUESTIONS = 5; // Usado na linha 137 para o if
 
     // Linha 130 mostra o tempo na tela.
 
@@ -91,7 +96,7 @@ class Game extends Component {
 
     return (
       <div>
-        <Header />
+        <Header />    
         {results !== undefined && (
           <div>
             <p data-testid="question-category">
@@ -140,14 +145,13 @@ class Game extends Component {
               type="button"
               data-testid="btn-next"
               onClick={ () => {
-                this.setState({ questionIndex: questionIndex + 1 });
-                if (questionIndex === MAX_QUESTIONS) {
-                  history.push({ pathname: ('/feedback') });
-                } else {
-                  this.answersShuffle();
-                  this.setState({ answered: false, time: 0 });
+                this.setState({ questionIndex: questionIndex += 1, answered: false, time: 30 });
+                if (questionIndex !== MAX_QUESTIONS) {
+                  this.answersShuffle(questionIndex) 
+                  return;         
                 }
-              } }
+                history.push({ pathname: ('/feedback') });
+               } }
             >
               Proxima
             </button>)
@@ -159,7 +163,8 @@ class Game extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   setToken: (payload) => dispatch(getToken(payload)),
-  dispatchScore: (payload) => dispatch(actionLogin(payload)),
+  dispatchScore: (payload) => dispatch(sendScore(payload)),
+  dispatchAssertion: () => dispatch(sendAssertion()),
 });
 
 const mapStateToProps = (state) => ({

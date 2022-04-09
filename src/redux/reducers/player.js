@@ -9,6 +9,10 @@ const player = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case 'LOGIN':
     return { ...state, ...action.payload };
+  case 'SCORE':
+    return { ...state, score: state.score + action.payload };
+  case 'ASSERTION':
+    return { ...state, assertions: state.assertions + 1 };
   default:
     return state;
   }

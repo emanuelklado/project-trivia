@@ -6,7 +6,7 @@ import md5 from 'crypto-js/md5';
 class Header extends React.Component {
   render() {
     const { userName, userEmail } = this.props;
-    const { score } = this.state;
+    // const { score } = this.state;
 
     return (
       <header>
@@ -17,7 +17,7 @@ class Header extends React.Component {
             data-testid="header-profile-picture"
           />
           <div data-testid="header-player-name">{userName}</div>
-          <div data-testid="header-score">{ score }</div>
+          <div data-testid="header-score">0</div>
         </h1>
       </header>
     );
