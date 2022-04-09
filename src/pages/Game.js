@@ -39,9 +39,8 @@ class Game extends Component {
     intervalID = setInterval(countdown, COUNTDOWN);
   }
 
-  answersShuffle = (questionIndex) => {  
-    
-    console.log(questionIndex)
+  answersShuffle = (questionIndex) => {
+    console.log(questionIndex);
 
     const randomChance = 0.5;
 
@@ -62,7 +61,12 @@ class Game extends Component {
     console.log(target.textContent);
     const base = 10;
     const { questionIndex, time } = this.state;
-    const { sessionQuestions: { results }, dispatchScore, dispatchAssertion } = this.props;
+    const {
+      sessionQuestions: { results },
+      dispatchScore,
+      dispatchAssertion,
+    } = this.props;
+
     const { correct_answer: correctAnswer } = results[questionIndex];
     if (target.textContent === correctAnswer) {
       const questionTypeScore = {
@@ -72,7 +76,7 @@ class Game extends Component {
       };
       const { difficulty } = results[questionIndex];
       const total = base + (time * questionTypeScore[difficulty]);
-      console.log(total)
+      console.log(total);
       dispatchScore(total);
       dispatchAssertion();
 
@@ -96,7 +100,7 @@ class Game extends Component {
 
     return (
       <div>
-        <Header />    
+        <Header />
         {results !== undefined && (
           <div>
             <p data-testid="question-category">
@@ -145,13 +149,15 @@ class Game extends Component {
               type="button"
               data-testid="btn-next"
               onClick={ () => {
-                this.setState({ questionIndex: questionIndex += 1, answered: false, time: 30 });
+                this.setState({
+                  questionIndex: questionIndex += 1, answered: false, time: 30,
+                });
                 if (questionIndex !== MAX_QUESTIONS) {
-                  this.answersShuffle(questionIndex) 
-                  return;         
+                  this.answersShuffle(questionIndex);
+                  return;
                 }
                 history.push({ pathname: ('/feedback') });
-               } }
+              } }
             >
               Proxima
             </button>)

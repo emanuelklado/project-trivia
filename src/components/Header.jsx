@@ -5,8 +5,8 @@ import md5 from 'crypto-js/md5';
 
 class Header extends React.Component {
   render() {
-    const { userName, userEmail, userScore, userAssertions } = this.props;  
-
+    const { userName, userEmail, userScore } = this.props;
+    // add userAssertions -> no this.props;
     return (
       <header>
         <h1>
@@ -33,6 +33,7 @@ const mapStateToProps = (state) => ({
 Header.propTypes = {
   userName: PropTypes.string.isRequired,
   userEmail: PropTypes.string.isRequired,
+  userScore: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);
