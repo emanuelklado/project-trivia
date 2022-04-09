@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 // import { fetchApiGame, fetchToken } from '../service/api';
-import { getToken, actionLogin } from '../redux/actions';
+import { getToken, sendScore, sendAssertion } from '../redux/actions';
 
 class Game extends Component {
   constructor(props) {
@@ -13,23 +13,23 @@ class Game extends Component {
       options: [], // Opções da pergunta atual
       correct: '', // Resposta correta
       answered: false, // Se foi respondida a pergunta
-      time: 0, // Contador para a resposta
+      time: 30, // Contador para a resposta
     };
   }
 
   componentDidMount() {
-    this.answersShuffle();
+    this.answersShuffle(0);
   }
 
   timer = () => {
     const COUNTDOWN = 1000;
     const TIMEOUT = 30;
-    let counter = 0;
+    let counter = TIMEOUT;
     let intervalID = null;
     const countdown = () => {
       const { answered } = this.state;
-      if (counter < TIMEOUT && !answered) {
-        counter += 1;
+      if (counter !== 0 && !answered) {
+        counter -= 1;
       } else {
         clearInterval(intervalID);
         this.setState({ answered: true });
@@ -39,10 +39,10 @@ class Game extends Component {
     intervalID = setInterval(countdown, COUNTDOWN);
   }
 
-  answersShuffle = () => {
-    const { questionIndex } = this.state;
+  answersShuffle = (questionIndex) => {
+    console.log(questionIndex);
 
-    const randomChance = 0.75;
+    const randomChance = 0.5;
 
     const { sessionQuestions: { results } } = this.props;
 
@@ -61,7 +61,12 @@ class Game extends Component {
     console.log(target.textContent);
     const base = 10;
     const { questionIndex, time } = this.state;
-    const { sessionQuestions: { results }, dispatchScore } = this.props;
+    const {
+      sessionQuestions: { results },
+      dispatchScore,
+      dispatchAssertion,
+    } = this.props;
+
     const { correct_answer: correctAnswer } = results[questionIndex];
     if (target.textContent === correctAnswer) {
       const questionTypeScore = {
@@ -71,18 +76,22 @@ class Game extends Component {
       };
       const { difficulty } = results[questionIndex];
       const total = base + (time * questionTypeScore[difficulty]);
-      dispatchScore({ score: total });
+      console.log(total);
+      dispatchScore(total);
+      dispatchAssertion();
 
       // Falta descobrir pra que a chave assertions serve.
     }
   }
 
   render() {
-    const { questionIndex, options, correct, answered, time } = this.state;
+    const { options, correct, answered, time } = this.state;
 
-    const { sessionQuestions: { results } } = this.props;
+    let { questionIndex } = this.state;
 
-    const MAX_QUESTIONS = 4; // Usado na linha 137 para o if
+    const { sessionQuestions: { results }, history } = this.props;
+
+    const MAX_QUESTIONS = 5; // Usado na linha 137 para o if
 
     // Linha 130 mostra o tempo na tela.
 
@@ -140,12 +149,14 @@ class Game extends Component {
               type="button"
               data-testid="btn-next"
               onClick={ () => {
-                if (questionIndex < MAX_QUESTIONS) {
-                  this.setState({ questionIndex: questionIndex + 1 });
-                  // History.push do feedback pode vir aqui. Precisa desestruturar ele no render
+                this.setState({
+                  questionIndex: questionIndex += 1, answered: false, time: 30,
+                });
+                if (questionIndex !== MAX_QUESTIONS) {
+                  this.answersShuffle(questionIndex);
+                  return;
                 }
-                this.answersShuffle();
-                this.setState({ answered: false, time: 0 });
+                history.push({ pathname: ('/feedback') });
               } }
             >
               Proxima
@@ -158,7 +169,8 @@ class Game extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   setToken: (payload) => dispatch(getToken(payload)),
-  dispatchScore: (payload) => dispatch(actionLogin(payload)),
+  dispatchScore: (payload) => dispatch(sendScore(payload)),
+  dispatchAssertion: () => dispatch(sendAssertion()),
 });
 
 const mapStateToProps = (state) => ({

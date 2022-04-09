@@ -12,3 +12,12 @@ export const getQuestions = (payload) => ({
   type: 'GET_QUESTIONS',
   payload,
 });
+
+export const sendScore = (payload) => ({
+  type: 'SCORE',
+  payload,
+});
+
+export const sendAssertion = () => ({
+  type: 'ASSERTION',
+});
