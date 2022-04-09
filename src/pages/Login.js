@@ -33,6 +33,7 @@ class Login extends Component {
   };
 
   handleDispatches = async () => {
+    const { history } = this.props;
     const { nameInput, emailInput } = this.state;
     const { dispatchScore, setToken, dispatchQuestions } = this.props;
 
@@ -46,6 +47,9 @@ class Login extends Component {
 
     setToken(data.token);
     dispatchQuestions(questionsData);
+
+    // linha 52 espera o Redux receber o estado antes de abrir a pagina game.
+    history.push('/game');
   }
 
   render() {
@@ -71,16 +75,14 @@ class Login extends Component {
             data-testid="input-gravatar-email"
           />
         </label>
-        <Link to="/game">
-          <button
-            type="button"
-            data-testid="btn-play"
-            onClick={ this.handleDispatches }
-            disabled={ isDisabled }
-          >
-            Play
-          </button>
-        </Link>
+        <button
+          type="button"
+          data-testid="btn-play"
+          onClick={ this.handleDispatches }
+          disabled={ isDisabled }
+        >
+          Play
+        </button>
         <Link to="/settings">
           <button
             type="button"
@@ -98,6 +100,7 @@ Login.propTypes = {
   setToken: PropTypes.func.isRequired,
   dispatchScore: PropTypes.func.isRequired,
   dispatchQuestions: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
