@@ -42,7 +42,7 @@ class Game extends Component {
   answersShuffle = () => {
     const { questionIndex } = this.state;
 
-    const randomChance = 0.75;
+    const randomChance = 0.5;
 
     const { sessionQuestions: { results } } = this.props;
 
