@@ -23,13 +23,19 @@ class Feedback extends Component {
   }
 
   render() {
-    const { assertions } = this.props;
+    const { assertions, userScore } = this.props;
     console.log(assertions);
 
     return (
       <div>
         <Header />
-        <h2 data-testid="feedback-text">{this.validateAssertions(assertions)}</h2>
+        <section>
+          <h1 data-testid="feedback-text">{this.validateAssertions(assertions)}</h1>
+          <div>
+            <h3 data-testid="feedback-total-question">{assertions}</h3>
+          </div>
+          <h3 data-testid="feedback-total-score">{userScore}</h3>
+        </section>
         <button
           data-testid="btn-play-again"
           type="button"
@@ -57,10 +63,12 @@ Feedback.propTypes = {
     push: PropTypes.func,
   }).isRequired,
   assertions: PropTypes.number.isRequired,
+  userScore: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   assertions: state.player.assertions,
+  userScore: state.player.score,
 });
 
 export default connect(mapStateToProps, null)(Feedback);
