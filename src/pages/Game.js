@@ -84,8 +84,20 @@ class Game extends Component {
     }
   }
 
+  changeColor = (option) => {
+    const { answered, correct } = this.state;
+    if (answered) {
+      return (
+        option === correct && answered
+          ? { border: '3px solid rgb(6, 240, 15)' }
+          : { border: '3px solid rgb(255, 0, 0)' }
+      );
+    }
+  }
+
   render() {
     const { options, correct, answered, time } = this.state;
+    console.log(answered);
 
     let { questionIndex } = this.state;
 
@@ -122,10 +134,7 @@ class Game extends Component {
                   : `wrong-answer-${index}`
               }
               style={
-                // Agora fica tudo com a borda vermelha até uma ser escolhida. Precisa verificar.
-                option === correct && answered
-                  ? { border: '3px solid rgb(6, 240, 15)' }
-                  : { border: '3px solid rgb(255, 0, 0)' }
+                this.changeColor(option)
               }
               onClick={ (event) => {
                 this.setState(
