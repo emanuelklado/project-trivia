@@ -8,6 +8,11 @@ export default class Feedback extends Component {
     history.push('/');
   };
 
+  redirectToRanking = () => {
+    const { history } = this.props;
+    history.push('/ranking');
+  }
+
   render() {
     return (
       <div data-testid="feedback-text">
@@ -18,6 +23,14 @@ export default class Feedback extends Component {
           onClick={ this.redirectToHome }
         >
           Play Again
+
+        </button>
+        <button
+          data-testid="btn-ranking"
+          type="button"
+          onClick={ this.redirectToRanking }
+        >
+          Ranking
 
         </button>
       </div>
