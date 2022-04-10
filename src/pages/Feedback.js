@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
 
-export default class Feedback extends Component {
+class Feedback extends Component {
   redirectToHome = () => {
     const { history } = this.props;
     history.push('/');
@@ -13,10 +14,22 @@ export default class Feedback extends Component {
     history.push('/ranking');
   }
 
+  validateAssertions = (assetions) => {
+    const minHits = 3;
+    if (assetions < minHits) {
+      return 'Could be better...';
+    }
+    return 'Well Done!';
+  }
+
   render() {
+    const { assertions } = this.props;
+    console.log(assertions);
+
     return (
-      <div data-testid="feedback-text">
+      <div>
         <Header />
+        <h2 data-testid="feedback-text">{this.validateAssertions(assertions)}</h2>
         <button
           data-testid="btn-play-again"
           type="button"
@@ -43,4 +56,11 @@ Feedback.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  assertions: PropTypes.number.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  assertions: state.player.assertions,
+});
+
+export default connect(mapStateToProps, null)(Feedback);
