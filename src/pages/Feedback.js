@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
 
 class Feedback extends Component {
@@ -27,15 +28,16 @@ class Feedback extends Component {
   }
 
   setLocalStorage = () => {
-    const { userScore, userName } = this.props;
+    const { userScore, userName, userEmail } = this.props;
     const getStorage = localStorage.getItem('ranking');
+    const urlPicture = `https://www.gravatar.com/avatar/${md5(userEmail)}`;
     if (getStorage !== null) {
       const ranking = JSON.parse(getStorage);
-      const newPlayer = { userScore, userName };
+      const newPlayer = { score: userScore, name: userName, picture: urlPicture };
       const newRanking = [...ranking, newPlayer];
       localStorage.setItem('ranking', JSON.stringify(newRanking));
     } else {
-      const newPlayer = { userScore, userName };
+      const newPlayer = { score: userScore, name: userName, picture: urlPicture };
       const newRanking = [newPlayer];
       localStorage.setItem('ranking', JSON.stringify(newRanking));
     }
@@ -81,13 +83,14 @@ Feedback.propTypes = {
   assertions: PropTypes.number.isRequired,
   userScore: PropTypes.number.isRequired,
   userName: PropTypes.string.isRequired,
-
+  userEmail: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   assertions: state.player.assertions,
   userScore: state.player.score,
   userName: state.player.userName,
+  userEmail: state.player.userName,
 });
 
 export default connect(mapStateToProps, null)(Feedback);

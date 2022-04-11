@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import sanitizeHtml from 'sanitize-html';
 import Header from '../components/Header';
-import { getToken, sendScore, sendAssertion } from '../redux/actions';
+import { getToken, sendScore, sendAssertion, resetAssertion } from '../redux/actions';
 
 class Game extends Component {
   constructor(props) {
@@ -19,6 +19,13 @@ class Game extends Component {
 
   componentDidMount() {
     this.answersShuffle(0);
+    this.resetState();
+  }
+
+  resetState = () => {
+    const { score, dispatchScore, dispatchResetAssertion } = this.props;
+    dispatchResetAssertion();
+    dispatchScore(-score);
   }
 
   timer = () => {
@@ -172,11 +179,14 @@ const mapDispatchToProps = (dispatch) => ({
   setToken: (payload) => dispatch(getToken(payload)),
   dispatchScore: (payload) => dispatch(sendScore(payload)),
   dispatchAssertion: () => dispatch(sendAssertion()),
+  dispatchResetAssertion: () => dispatch(resetAssertion()),
 });
 
 const mapStateToProps = (state) => ({
   userToken: state.token,
   sessionQuestions: state.questions,
+  score: state.player.score,
+  assertions: state.player.assertions,
 });
 
 Game.propTypes = {
