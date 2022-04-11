@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import sanitizeHtml from 'sanitize-html';
 import Header from '../components/Header';
 import { getToken, sendScore, sendAssertion, resetAssertion } from '../redux/actions';
 
@@ -104,7 +105,9 @@ class Game extends Component {
 
     const { sessionQuestions: { results }, history } = this.props;
 
-    const MAX_QUESTIONS = 5;
+    const MAX_QUESTIONS = 5; // Usado na linha 137 para o if
+
+    const cleanQuestions = sanitizeHtml(results[questionIndex].question);
 
     return (
       <div>
@@ -115,7 +118,7 @@ class Game extends Component {
               { results[questionIndex].category }
             </p>
             <p data-testid="question-text">
-              { results[questionIndex].question }
+              { cleanQuestions }
             </p>
           </div>
         )}
@@ -143,7 +146,7 @@ class Game extends Component {
               } }
               disabled={ answered }
             >
-              { option }
+              { sanitizeHtml(option) }
             </button>
           ))}
         </div>
