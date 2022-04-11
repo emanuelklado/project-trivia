@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import sanitizeHtml from 'sanitize-html';
 import Header from '../components/Header';
-// import { fetchApiGame, fetchToken } from '../service/api';
 import { getToken, sendScore, sendAssertion } from '../redux/actions';
 
 class Game extends Component {
@@ -40,8 +40,6 @@ class Game extends Component {
   }
 
   answersShuffle = (questionIndex) => {
-    // console.log(questionIndex);
-
     const randomChance = 0.5;
 
     const { sessionQuestions: { results } } = this.props;
@@ -58,7 +56,6 @@ class Game extends Component {
   }
 
   score = ({ target }) => {
-    // console.log(target.textContent);
     const base = 10;
     const { questionIndex, time } = this.state;
     const {
@@ -76,11 +73,8 @@ class Game extends Component {
       };
       const { difficulty } = results[questionIndex];
       const total = base + (time * questionTypeScore[difficulty]);
-      console.log(total);
       dispatchScore(total);
       dispatchAssertion();
-
-      // Falta descobrir pra que a chave assertions serve.
     }
   }
 
@@ -106,10 +100,7 @@ class Game extends Component {
 
     const MAX_QUESTIONS = 5; // Usado na linha 137 para o if
 
-    // Linha 130 mostra o tempo na tela.
-
-    /* IMPORTANTE: as vezes o requisito das opções aleatórias não passa,
-        Deve ser devido a chance de mudar na linha 45 */
+    const cleanQuestions = sanitizeHtml(results[questionIndex].question);
 
     return (
       <div>
@@ -120,7 +111,7 @@ class Game extends Component {
               { results[questionIndex].category }
             </p>
             <p data-testid="question-text">
-              { results[questionIndex].question }
+              { cleanQuestions }
             </p>
           </div>
         )}
@@ -148,7 +139,7 @@ class Game extends Component {
               } }
               disabled={ answered }
             >
-              { option }
+              { sanitizeHtml(option) }
             </button>
           ))}
         </div>
