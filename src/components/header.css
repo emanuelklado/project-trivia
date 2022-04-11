@@ -1,13 +1,13 @@
 .header_container {
-  border: 1px solid red;
   display: flex;
   justify-content: space-around;
-  padding: 1.5rem;
+
+  /* padding: 1.2rem; */
 }
 
 .header_container img {
   border-radius: 50px;
-  margin-right: 20px;
+  margin-right: 5px;
 }
 
 .header_section_container {
