@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-// import { fetchApiGame, fetchToken } from '../service/api';
-import { getToken, sendScore, sendAssertion } from '../redux/actions';
+import { getToken, sendScore, sendAssertion, resetAssertion } from '../redux/actions';
 
 class Game extends Component {
   constructor(props) {
@@ -19,6 +18,13 @@ class Game extends Component {
 
   componentDidMount() {
     this.answersShuffle(0);
+    this.resetState();
+  }
+
+  resetState = () => {
+    const { score, dispatchScore, dispatchResetAssertion } = this.props;
+    dispatchResetAssertion();
+    dispatchScore(-score);
   }
 
   timer = () => {
@@ -40,8 +46,6 @@ class Game extends Component {
   }
 
   answersShuffle = (questionIndex) => {
-    // console.log(questionIndex);
-
     const randomChance = 0.5;
 
     const { sessionQuestions: { results } } = this.props;
@@ -58,7 +62,6 @@ class Game extends Component {
   }
 
   score = ({ target }) => {
-    // console.log(target.textContent);
     const base = 10;
     const { questionIndex, time } = this.state;
     const {
@@ -76,11 +79,8 @@ class Game extends Component {
       };
       const { difficulty } = results[questionIndex];
       const total = base + (time * questionTypeScore[difficulty]);
-      console.log(total);
       dispatchScore(total);
       dispatchAssertion();
-
-      // Falta descobrir pra que a chave assertions serve.
     }
   }
 
@@ -104,12 +104,7 @@ class Game extends Component {
 
     const { sessionQuestions: { results }, history } = this.props;
 
-    const MAX_QUESTIONS = 5; // Usado na linha 137 para o if
-
-    // Linha 130 mostra o tempo na tela.
-
-    /* IMPORTANTE: as vezes o requisito das opções aleatórias não passa,
-        Deve ser devido a chance de mudar na linha 45 */
+    const MAX_QUESTIONS = 5;
 
     return (
       <div>
@@ -181,11 +176,14 @@ const mapDispatchToProps = (dispatch) => ({
   setToken: (payload) => dispatch(getToken(payload)),
   dispatchScore: (payload) => dispatch(sendScore(payload)),
   dispatchAssertion: () => dispatch(sendAssertion()),
+  dispatchResetAssertion: () => dispatch(resetAssertion()),
 });
 
 const mapStateToProps = (state) => ({
   userToken: state.token,
   sessionQuestions: state.questions,
+  score: state.player.score,
+  assertions: state.player.assertions,
 });
 
 Game.propTypes = {

@@ -21,3 +21,7 @@ export const sendScore = (payload) => ({
 export const sendAssertion = () => ({
   type: 'ASSERTION',
 });
+
+export const resetAssertion = () => ({
+  type: 'RESET_ASSERTION',
+});

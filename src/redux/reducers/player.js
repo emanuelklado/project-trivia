@@ -13,6 +13,8 @@ const player = (state = INITIAL_STATE, action) => {
     return { ...state, score: state.score + action.payload };
   case 'ASSERTION':
     return { ...state, assertions: state.assertions + 1 };
+  case 'RESET_ASSERTION':
+    return { ...state, assertions: 0 };
   default:
     return state;
   }
