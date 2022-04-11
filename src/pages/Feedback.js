@@ -29,9 +29,7 @@ class Feedback extends Component {
   setLocalStorage = () => {
     const { userScore, userName } = this.props;
     const getStorage = localStorage.getItem('ranking');
-    console.log(getStorage);
     if (getStorage !== null) {
-      console.log('entrou');
       const ranking = JSON.parse(getStorage);
       const newPlayer = { userScore, userName };
       const newRanking = [...ranking, newPlayer];
@@ -45,7 +43,6 @@ class Feedback extends Component {
 
   render() {
     const { assertions, userScore } = this.props;
-    console.log(assertions);
 
     return (
       <div>
