@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import sanitizeHtml from 'sanitize-html';
 import Header from '../components/Header';
 import { getToken, sendScore, sendAssertion, resetAssertion } from '../redux/actions';
+import './game.css';
 
 class Game extends Component {
   constructor(props) {
@@ -110,67 +111,79 @@ class Game extends Component {
     const cleanQuestions = sanitizeHtml(results[questionIndex].question);
 
     return (
-      <div>
+      <>
         <Header />
-        {results !== undefined && (
-          <div>
-            <p data-testid="question-category">
-              { results[questionIndex].category }
-            </p>
-            <p data-testid="question-text">
-              { cleanQuestions }
-            </p>
-          </div>
-        )}
-        <div data-testid="answer-options">
-          {options.map((option, index) => (
-            <button
-              type="button"
-              key={ index }
-              data-testid={
-                option === correct
-                  ? 'correct-answer'
-                  : `wrong-answer-${index}`
-              }
-              style={
-                this.changeColor(option)
-              }
-              onClick={ (event) => {
-                this.setState(
-                  {
-                    answered: true,
-                  },
-                );
+        <div className="game_container">
+          <div className="card">
+            {results !== undefined && (
+              <div className="game_perguntas_container">
+                <p data-testid="question-category">
+                  {`Categoria: ${results[questionIndex].category}` }
+                </p>
+                <p data-testid="question-text">
+                  {`Pergunta: ${cleanQuestions}` }
+                </p>
+              </div>
+            )}
+            <div className="game_respostas_container" data-testid="answer-options">
+              <h2>Alternativas:</h2>
+              {options.map((option, index) => (
+                <button
+                  className="myButton"
+                  type="button"
+                  key={ index }
+                  data-testid={
+                    option === correct
+                      ? 'correct-answer'
+                      : `wrong-answer-${index}`
+                  }
+                  style={
+                    this.changeColor(option)
+                  }
+                  onClick={ (event) => {
+                    this.setState(
+                      {
+                        answered: true,
+                      },
+                    );
 
-                this.score(event);
-              } }
-              disabled={ answered }
-            >
-              { sanitizeHtml(option) }
-            </button>
-          ))}
+                    this.score(event);
+                  } }
+                  disabled={ answered }
+                >
+                  { sanitizeHtml(option) }
+                </button>
+              ))}
+            </div>
+          </div>
+          <p>
+            {' '}
+            Tempo Restante:
+            {' '}
+            { time }
+          </p>
+          { answered
+            ? (
+              <button
+                className="myButtonNext"
+                type="button"
+                data-testid="btn-next"
+                onClick={ () => {
+                  this.setState({
+                    questionIndex: questionIndex += 1, answered: false, time: 30,
+                  });
+                  if (questionIndex !== MAX_QUESTIONS) {
+                    this.answersShuffle(questionIndex);
+                    return;
+                  }
+                  history.push({ pathname: ('/feedback') });
+                } }
+              >
+                Proxima
+              </button>)
+            : ('')}
         </div>
-        <p>{ time }</p>
-        { answered
-          ? (
-            <button
-              type="button"
-              data-testid="btn-next"
-              onClick={ () => {
-                this.setState({
-                  questionIndex: questionIndex += 1, answered: false, time: 30,
-                });
-                if (questionIndex !== MAX_QUESTIONS) {
-                  this.answersShuffle(questionIndex);
-                  return;
-                }
-                history.push({ pathname: ('/feedback') });
-              } }
-            >
-              Proxima
-            </button>)
-          : ('')}
-      </div>
+      </>
     );
   }
 }

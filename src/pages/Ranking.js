@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import './ranking.css';
+
+import logo from '../assets/trivia.png';
 
 export default class Ranking extends Component {
   state = {
@@ -23,25 +26,37 @@ export default class Ranking extends Component {
   render() {
     const { ranking } = this.state;
     return (
-      <div>
-        <h1 data-testid="ranking-title">Ranking</h1>
-        <button
-          data-testid="btn-go-home"
-          type="button"
-          onClick={ this.redirectToHome }
-        >
-          Inicio
+      <div className="ranking_container">
+        <div className="ranking_head_container">
+          <img className="logo" src={ logo } alt="logo trivia" />
+          <h1 data-testid="ranking-title">Ranking</h1>
+          <button
+            className="myButtonNext"
+            data-testid="btn-go-home"
+            type="button"
+            onClick={ this.redirectToHome }
+          >
+            Inicio
 
-        </button>
-
-        {ranking.map((player, index) => (
-          <div key={ player.name }>
-            <img src={ player.picture } alt={ `Imagem de ${player.name}` } />
-            <p data-testid={ `player-name-${index}` }>{ player.name }</p>
-            <p data-testid={ `player-score-${index}` }>{ player.score }</p>
-          </div>
-        ))}
-
+          </button>
+        </div>
+        <div className="card_ranking">
+          {ranking.map((player, index) => (
+            <div className="card_ranking_item" key={ player.name }>
+              <img src={ player.picture } alt={ `Imagem de ${player.name}` } />
+              <p data-testid={ `player-name-${index}` }>
+                Nome:
+                {' '}
+                { player.name }
+              </p>
+              <p data-testid={ `player-score-${index}` }>
+                Pontuação:
+                {' '}
+                { player.score }
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

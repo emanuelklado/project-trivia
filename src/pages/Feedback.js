@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
+import './feedback.css';
 
 class Feedback extends Component {
   componentDidMount() {
@@ -47,31 +48,46 @@ class Feedback extends Component {
     const { assertions, userScore } = this.props;
 
     return (
-      <div>
+      <>
         <Header />
-        <section>
-          <h1 data-testid="feedback-text">{this.validateAssertions(assertions)}</h1>
-          <h3 data-testid="feedback-total-question">{assertions}</h3>
-          <h3 data-testid="feedback-total-score">{userScore}</h3>
-        </section>
-        <button
-          data-testid="btn-play-again"
-          type="button"
-          onClick={ this.redirectToHome }
-        >
-          Play Again
+        <div className="feedback_container">
+          <section className="card">
+            <h1 data-testid="feedback-text">
+              Nosso Feedback:
+              {' '}
+              {this.validateAssertions(assertions)}
+            </h1>
+            <h1 data-testid="feedback-total-question">
+              Respostas Certas:
+              {' '}
+              {assertions}
+            </h1>
+            <h1 data-testid="feedback-total-score">
+              Pontuação Total:
+              {' '}
+              {userScore}
+            </h1>
+          </section>
+          <button
+            className="myButtonNext"
+            data-testid="btn-play-again"
+            type="button"
+            onClick={ this.redirectToHome }
+          >
+            Play Again
 
-        </button>
-        <button
-          data-testid="btn-ranking"
-          type="button"
-          onClick={ this.redirectToRanking }
-        >
-          Ranking
+          </button>
+          <button
+            className="myButtonNext"
+            data-testid="btn-ranking"
+            type="button"
+            onClick={ this.redirectToRanking }
+          >
+            Ranking
 
-        </button>
-      </div>
-
+          </button>
+        </div>
+      </>
     );
   }
 }

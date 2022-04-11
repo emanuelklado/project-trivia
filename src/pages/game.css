@@ -1,0 +1,112 @@
+.game_container {
+  align-items: center;
+  border: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card {
+  align-items: center;
+  backdrop-filter: blur(17px);
+  background: var(--color-bg-variant);
+
+  /* border: 2px solid black; */
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 100px;
+  padding: 30px;
+  width: 35%;
+}
+
+.game_respostas_container {
+  align-items: center;
+
+  /* border: 1px solid green; */
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  justify-content: center;
+  margin-top: 50px;
+  width: 280px;
+}
+
+.game_respostas_container button {
+  margin: 8px;
+}
+
+.game_perguntas_container {
+  align-items: center;
+  background-image: linear-gradient(180deg, rgb(38, 86, 187), rgb(180, 164, 201));
+
+  /* border: 1px solid black; */
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0.5;
+  padding: 15px;
+}
+
+p {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.myButton {
+  background: linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+  background-color: #007dc1;
+  border: 1px solid #124d77;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 0 0 #54a3f7;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #154682;
+  width: 100%;
+}
+
+.myButton:hover {
+  background: linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+  background-color: #0061a7;
+}
+
+.myButton:active {
+  position: relative;
+  top: 1px;
+}
+
+.myButtonNext {
+  background: linear-gradient(to bottom, #dfbdfa 5%, #bc80ea 100%);
+  background-color: #dfbdfa;
+  border: 1px solid #c584f3;
+  border-radius: 6px;
+  box-shadow: inset 0 1px 0 0 #efdcfb;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 5px;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #9752cc;
+  width: 150px;
+}
+
+.myButtonNext:hover {
+  background: linear-gradient(to bottom, #bc80ea 5%, #dfbdfa 100%);
+  background-color: #bc80ea;
+}
+
+.myButtonNext:active {
+  position: relative;
+  top: 1px;
+}
+

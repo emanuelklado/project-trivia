@@ -1,0 +1,43 @@
+.card_ranking {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 25px;
+}
+
+.card_ranking_item {
+  align-items: center;
+  background-image: linear-gradient(180deg, rgb(192, 195, 202), rgb(180, 164, 201));
+  border-radius: 10px;
+
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 5px;
+  padding: 10px;
+}
+
+.card_ranking_item img {
+  border-radius: 50%;
+}
+
+.card_ranking_item p {
+  margin: 2px;
+  padding: 5px;
+}
+
+.ranking_container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.ranking_head_container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

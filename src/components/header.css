@@ -1,0 +1,15 @@
+.header_container {
+  border: 1px solid red;
+  display: flex;
+  justify-content: space-around;
+  padding: 1.5rem;
+}
+
+.header_container img {
+  border-radius: 50px;
+  margin-right: 20px;
+}
+
+.header_section_container {
+  display: flex;
+}

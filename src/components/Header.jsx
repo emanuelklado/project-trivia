@@ -2,22 +2,31 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
+import './header.css';
 
 class Header extends React.Component {
   render() {
     const { userName, userEmail, userScore } = this.props;
     // add userAssertions -> no this.props;
     return (
-      <header>
-        <h1>
+      <header className="header_container">
+        <section className="header_section_container">
           <img
             src={ `https://www.gravatar.com/avatar/${md5(userEmail)}` }
             alt={ `Foto de perfil de ${userName}` }
             data-testid="header-profile-picture"
           />
-          <div data-testid="header-player-name">{userName}</div>
-          <div data-testid="header-score">{ userScore }</div>
-        </h1>
+          <h2 data-testid="header-player-name">
+            Nome do usuário:
+            {' '}
+            {userName}
+          </h2>
+        </section>
+        <h2 data-testid="header-score">
+          Pontuação:
+          {' '}
+          { userScore }
+        </h2>
       </header>
     );
   }
