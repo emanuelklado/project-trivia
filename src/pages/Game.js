@@ -40,7 +40,7 @@ class Game extends Component {
   }
 
   answersShuffle = (questionIndex) => {
-    console.log(questionIndex);
+    // console.log(questionIndex);
 
     const randomChance = 0.5;
 
@@ -58,7 +58,7 @@ class Game extends Component {
   }
 
   score = ({ target }) => {
-    console.log(target.textContent);
+    // console.log(target.textContent);
     const base = 10;
     const { questionIndex, time } = this.state;
     const {
@@ -81,6 +81,19 @@ class Game extends Component {
       dispatchAssertion();
 
       // Falta descobrir pra que a chave assertions serve.
+    }
+  }
+
+  changeColor = (option) => {
+    const { answered, correct } = this.state;
+    if (answered) {
+      return (
+        option === correct
+          ? (
+            { border: '3px solid rgb(6, 240, 15)' }
+          )
+          : { border: '3px solid rgb(255, 0, 0)' }
+      );
     }
   }
 
@@ -122,10 +135,7 @@ class Game extends Component {
                   : `wrong-answer-${index}`
               }
               style={
-                // Agora fica tudo com a borda vermelha até uma ser escolhida. Precisa verificar.
-                option === correct && answered
-                  ? { border: '3px solid rgb(6, 240, 15)' }
-                  : { border: '3px solid rgb(255, 0, 0)' }
+                this.changeColor(option)
               }
               onClick={ (event) => {
                 this.setState(
