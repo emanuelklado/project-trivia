@@ -49,16 +49,12 @@ class Game extends Component {
 
   answersShuffle = (questionIndex) => {
     const randomChance = 0.5;
-
     const { sessionQuestions: { results } } = this.props;
-
     const { correct_answer: correctAnswer,
       incorrect_answers: incorrectAnswers } = results[questionIndex];
 
     const output = [...incorrectAnswers, correctAnswer];
-
     const expect = output.sort(() => Math.random() - randomChance);
-
     this.setState({ options: expect, correct: correctAnswer });
     this.timer();
   }
@@ -126,7 +122,7 @@ class Game extends Component {
               </div>
             )}
             <div className="game_respostas_container" data-testid="answer-options">
-              <h2>Alternativas:</h2>
+              <h3>Alternativas:</h3>
               {options.map((option, index) => (
                 <button
                   className="myButton"
@@ -156,12 +152,15 @@ class Game extends Component {
               ))}
             </div>
           </div>
-          <p>
-            {' '}
-            Tempo Restante:
-            {' '}
-            { time }
-          </p>
+          <div className="div_tempo_restante">
+            <p className="tempo_restante">
+              {' '}
+              Tempo Restante:
+              {' '}
+              { time }
+            </p>
+          </div>
+
           { answered
             ? (
               <button

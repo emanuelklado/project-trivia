@@ -6,6 +6,7 @@ import { getToken, actionLogin, getQuestions } from '../redux/actions';
 import { fetchToken, fetchApiGame } from '../service/api';
 import './login.css';
 import logo from '../assets/trivia.png';
+import homeSVG from '../assets/undrowHome.svg';
 
 class Login extends Component {
   state = {
@@ -58,48 +59,52 @@ class Login extends Component {
     return (
       <div className="login_container">
         <img className="logo" src={ logo } alt="logo do jogo trivia" />
-        <form className="login_form_container">
-          <label className="label_input" htmlFor="input-player-name">
-            Nome
-            <input
-              type="text"
-              name="nameInput"
-              onChange={ this.handleChange }
-              data-testid="input-player-name"
-              className="login_input"
-              autoComplete="off"
-            />
-          </label>
-          <label className="label_input" htmlFor="input-gravatar-email">
-            E-mail
-            <input
-              type="text"
-              name="emailInput"
-              onChange={ this.handleChange }
-              data-testid="input-gravatar-email"
-              className="login_input"
-              autoComplete="off"
-            />
-          </label>
-          <button
-            className="login_button"
-            type="button"
-            data-testid="btn-play"
-            onClick={ this.handleDispatches }
-            disabled={ isDisabled }
-          >
-            Play
-          </button>
-          <Link to="/settings">
+        <section className="main_container">
+          <img className="logo" src={ homeSVG } alt="logo do jogo trivia" />
+          <form className="login_form_container">
+            <label className="label_input" htmlFor="input-player-name">
+              Nome
+              <input
+                type="text"
+                name="nameInput"
+                onChange={ this.handleChange }
+                data-testid="input-player-name"
+                className="login_input"
+                autoComplete="off"
+              />
+            </label>
+            <label className="label_input" htmlFor="input-gravatar-email">
+              E-mail
+              <input
+                type="text"
+                name="emailInput"
+                onChange={ this.handleChange }
+                data-testid="input-gravatar-email"
+                className="login_input"
+                autoComplete="off"
+              />
+            </label>
             <button
-              className="settings_button"
+              className="login_button"
               type="button"
-              data-testid="btn-settings"
+              data-testid="btn-play"
+              onClick={ this.handleDispatches }
+              disabled={ isDisabled }
             >
-              Settings
+              Play
             </button>
-          </Link>
-        </form>
+            <Link to="/settings">
+              <button
+                className="settings_button"
+                type="button"
+                data-testid="btn-settings"
+              >
+                Settings
+              </button>
+            </Link>
+          </form>
+        </section>
+        <h4 className="developedBy">Developed by: Anderson, Matheus, Lucas, Eiezer e Emanuel</h4>
       </div>
     );
   }

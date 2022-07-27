@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './ranking.css';
-
 import logo from '../assets/trivia.png';
+import rankingSVG from '../assets/rankingSVG.svg';
 
 export default class Ranking extends Component {
   state = {
@@ -30,6 +30,7 @@ export default class Ranking extends Component {
         <div className="ranking_head_container">
           <img className="logo" src={ logo } alt="logo trivia" />
           <h1 data-testid="ranking-title">Ranking</h1>
+          <img src={ rankingSVG } alt="ranking svg" />
           <button
             className="myButtonNext"
             data-testid="btn-go-home"

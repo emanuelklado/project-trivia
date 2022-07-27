@@ -1,7 +1,30 @@
 .feedback_container {
   align-items: center;
-  border: 1px solid green;
+  color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-shadow: 2px 2px 1px black;
+
+}
+
+.feedback_svg_item {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+
+}
+
+.feedback_svg_item img {
+  margin: 0;
+  padding: 0;
+  width: 50%;
+}
+
+.feedback_card {
+  background-color: rgba(79, 47, 74, 0.2);
+  border-radius: 15px;
+  padding: 2%;
+  width: 40%;
 }

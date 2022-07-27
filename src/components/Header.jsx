@@ -16,11 +16,17 @@ class Header extends React.Component {
             alt={ `Foto de perfil de ${userName}` }
             data-testid="header-profile-picture"
           />
-          <h2 data-testid="header-player-name">
-            Nome do usuário:
-            {' '}
-            {userName}
-          </h2>
+          <div>
+            <h2 data-testid="header-player-name">
+              User:
+              {' '}
+              {userName}
+            </h2>
+            <h2 data-testid="header-player-email">
+              {userEmail}
+            </h2>
+          </div>
+
         </section>
         <h2 data-testid="header-score">
           Pontuação:

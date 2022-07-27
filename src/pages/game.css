@@ -9,14 +9,15 @@
 
 .card {
   align-items: center;
-  backdrop-filter: blur(17px);
-  background: var(--color-bg-variant);
+  background-color: rgba(47, 79, 79, 0.2);
   border-radius: 10px;
+  color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin-top: 15px;
   padding: 10px;
+  text-shadow: 2px 2px 1px black;
   width: 35%;
 }
 
@@ -38,15 +39,19 @@
 
 .game_perguntas_container {
   align-items: center;
-  background-image: linear-gradient(180deg, rgb(38, 86, 187), rgb(180, 164, 201));
+  background-image: linear-gradient(180deg, rgba(38, 86, 187, 0.5), rgba(180, 164, 201, 0.25));
 
   /* border: 1px solid black; */
   border-radius: 15px;
+  color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  opacity: 0.5;
+
+  /* opacity: 0.5; */
   padding: 15px;
+  text-shadow: 2px 2px 1px black;
+  width: 85%;
 }
 
 p {
@@ -67,7 +72,7 @@ p {
   font-weight: 600;
   padding: 6px 24px;
   text-decoration: none;
-  text-shadow: 0 1px 0 #154682;
+  text-shadow: 0 1px 0 black;
   width: 100%;
 }
 
@@ -109,3 +114,14 @@ p {
   top: 1px;
 }
 
+.div_tempo_restante {
+  align-items: center;
+  background-color: rgba(47, 79, 79, 0.2);
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  text-shadow: 2px 2px 1px black;
+  width: 36.5%;
+}

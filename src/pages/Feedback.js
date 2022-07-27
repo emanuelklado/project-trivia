@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
 import './feedback.css';
+import feedbackSVG from '../assets/feedbackSVG.svg';
 
 class Feedback extends Component {
   componentDidMount() {
@@ -51,7 +52,10 @@ class Feedback extends Component {
       <>
         <Header />
         <div className="feedback_container">
-          <section className="card">
+          <section className="feedback_svg_item">
+            <img src={ feedbackSVG } alt="imagem de feedback" />
+          </section>
+          <section className="feedback_card">
             <h1 data-testid="feedback-text">
               Nosso Feedback:
               {' '}

@@ -1,21 +1,54 @@
 .card_ranking {
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   margin: 25px;
+  width: 33%;
 }
 
 .card_ranking_item {
   align-items: center;
   background-image: linear-gradient(180deg, rgb(192, 195, 202), rgb(180, 164, 201));
   border-radius: 10px;
-
-  /* border: 1px solid red; */
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 5px;
   padding: 10px;
+  transition: var(--transition);
+  width: 500px;
+}
+
+.card_ranking_item:nth-child( 1 ) {
+  animation: gradient 2s ease-in infinite;
+  background: radial-gradient(ellipse farthest-corner at right bottom, #fedb37 0%, #fdb931 8%, #9f7928 30%, #8a6e2f 40%, transparent 80%) , radial-gradient(ellipse farthest-corner at left top, white 0%, #ffffac 8%, #d1b464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
+  background-size: 150% 150%;
+  transition: 600ms;
+}
+
+.card_ranking_item:nth-child( 2 ) {
+  animation: gradient 2s ease-in infinite;
+  background-image: linear-gradient(-75deg, rgb(235, 235, 235), rgb(98, 96, 96));
+  background-size: 200% 200%;
+  transition: 600ms;
+}
+
+.card_ranking_item:nth-child( 3 ) {
+  animation: gradient 2s ease-in infinite;
+  background-image: linear-gradient(45deg, rgb(218, 89, 30), rgb(80, 55, 2));
+  background-size: 150% 150%;
+
+  /* color: white; */
+  transition: 600ms;
+}
+
+.card_ranking_item:hover {
+  transform: scale(1.07);
+  transition: var(--transition);
+}
+
+.ranking_head_container img {
+  width: 250px;
 }
 
 .card_ranking_item img {
@@ -41,3 +74,32 @@
   flex-direction: column;
   justify-content: center;
 }
+
+@keyframes gradient {
+
+  0% {
+    background-position: 0% 50%;
+
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* .gradiente_prata {
+  background-image: linear-gradient(-75deg, rgb(235, 235, 235), rgb(98, 96, 96));
+}
+
+.gradiente_gold {
+  background-image: linear-gradient(-75deg, rgb(243, 205, 18), rgb(154, 100, 25));
+}
+
+.gradiente_bronze {
+  background-image: linear-gradient(-75deg, rgb(116, 55, 14), rgb(177, 72, 2));
+  background-image: linear-gradient(45deg, rgb(110, 40, 2), rgb(148, 117, 49));
+} */
